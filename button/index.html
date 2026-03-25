@@ -1,0 +1,102 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Button</title>
+
+<style>
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f172a;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  flex-direction: column;
+}
+
+button {
+  position: relative;
+  overflow: hidden;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #6366f1, #8b5cf6);
+  color: white;
+  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(99,102,241,0.6);
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 25px rgba(139,92,246,0.9);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Ripple effect */
+button span {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(255,255,255,0.6);
+  animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Counter text */
+#count {
+  margin-top: 20px;
+  font-size: 20px;
+  opacity: 0.8;
+}
+</style>
+
+</head>
+<body>
+
+<button onclick="handleClick(event)">
+  🚀 Click Me
+</button>
+
+<div id="count">Clicks: 0</div>
+
+<script>
+let count = 0;
+
+function handleClick(e) {
+  
+  count++;
+  document.getElementById("count").innerText = "Clicks: " + count;
+
+  
+  const button = e.currentTarget;
+  const circle = document.createElement("span");
+
+  const rect = button.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+
+  circle.style.width = circle.style.height = size + "px";
+  circle.style.left = e.clientX - rect.left - size / 2 + "px";
+  circle.style.top = e.clientY - rect.top - size / 2 + "px";
+
+  button.appendChild(circle);
+
+  setTimeout(() => circle.remove(), 600);
+}
+</script>
+
+</body>
+</html>
